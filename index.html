@@ -1,32 +1,44 @@
-<<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agendamento Day Off</title>
+    <title>Day Off - Sistema de Escala</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="main-container">
-        <h1>Day Off 🌴</h1>
-        <p>Escolha seu nome e a data da sua folga.</p>
+    <header class="navbar-corporativa">
+        <div class="logo-area">
+            <span class="logo-texto">SISTEMAS INTERNOS</span>
+        </div>
+        <div class="user-area">Produção</div>
+    </header>
+    <div class="linha-vermelha"></div>
+
+    <main class="main-container">
+        <div class="titulo-pagina">
+            <h1>Gestão de Day Off</h1>
+            <p>Agendamento e consulta de folgas da equipe de produção.</p>
+        </div>
         
-        <div class="input-group-vertical">
-            <label for="nomeFuncionario">Funcionário:</label>
-            <select id="nomeFuncionario">
-                <option value="">Carregando lista...</option>
-            </select>
+        <div class="card-formulario">
+            <h2>Agendar Nova Folga</h2>
+            <div class="input-group-vertical">
+                <label for="nomeFuncionario">Funcionário</label>
+                <select id="nomeFuncionario">
+                    <option value="">Carregando lista...</option>
+                </select>
 
-            <label for="dataFolga">Data pretendida:</label>
-            <input type="date" id="dataFolga">
+                <label for="dataFolga">Data Pretendida</label>
+                <input type="date" id="dataFolga">
 
-            <button id="addBtn">Agendar Folga</button>
+                <button id="addBtn">AGENDAR FOLGA</button>
+            </div>
         </div>
 
-        <div id="listaItens">
-            </div>
-    </div>
+        <div id="listaItens"></div>
+    </main>
 
     <script src="script.js"></script>
 </body>
