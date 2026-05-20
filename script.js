@@ -142,15 +142,15 @@ function renderizarPainelChefe() {
     if (!listaItens) return;
 
     listaItens.innerHTML = `
-        <div style="margin-top: 20px; font-family: sans-serif;">
-            <h3 style="color: #d9534f; border-bottom: 2px solid #d9534f; padding-bottom: 5px;">☀️ Quem folga HOJE</h3>
-            <ul id="folgaHoje" style="list-style: none; padding-left: 5px; margin-bottom: 20px;"></ul>
+        <div>
+            <h3>☀️ QUEM FOLGA HOJE</h3>
+            <ul id="folgaHoje"></ul>
 
-            <h3 style="color: #f0ad4e; border-bottom: 2px solid #f0ad4e; padding-bottom: 5px;">🌅 Quem folga AMANHÃ</h3>
-            <ul id="folgaAmanha" style="list-style: none; padding-left: 5px; margin-bottom: 20px;"></ul>
+            <h3>🌅 QUEM FOLGA AMANHÃ</h3>
+            <ul id="folgaAmanha"></ul>
 
-            <h3 style="color: #0275d8; border-bottom: 2px solid #0275d8; padding-bottom: 5px;">📅 Próximos Day Offs (Esta semana / Próxima)</h3>
-            <ul id="folgaFutura" style="list-style: none; padding-left: 5px;"></ul>
+            <h3>📅 PRÓXIMOS DAY OFFS (15 DIAS)</h3>
+            <ul id="folgaFutura"></ul>
         </div>
     `;
 
@@ -158,61 +158,38 @@ function renderizarPainelChefe() {
     const ulAmanha = document.getElementById('folgaAmanha');
     const ulFutura = document.getElementById('folgaFutura');
 
-    // Pegar a data atual do sistema (zerando horas)
     const hoje = new Date();
     hoje.setHours(0, 0, 0, 0);
 
     const amanha = new Date(hoje);
     amanha.setDate(amanha.getDate() + 1);
 
-    // Junta os dados fixos do arquivo + o que for adicionado via tela (localStorage)
     const agendamentosManuais = JSON.parse(localStorage.getItem('dayOffList')) || [];
-    
-    // Lista para centralizar todos os processos
     let todasAsFolgas = [];
 
-    // Processa a lista do arquivo CSV
     dadosFuncionarios.forEach(f => {
         let dataAlvo = null;
-
-        // Se tiver uma data de Day Off específica no ano atual (2026)
         if (f.dayOff && f.dayOff.startsWith("2026")) {
             dataAlvo = new Date(f.dayOff + 'T00:00:00');
-        } 
-        // Caso contrário, tenta estimar pelo aniversário usando o ano corrente
-        else if (f.aniversario) {
-            const mesDia = f.aniversario.substring(5); // Pega o MM-DD
+        } else if (f.aniversario) {
+            const mesDia = f.aniversario.substring(5);
             if (mesDia) {
                 dataAlvo = new Date(`${hoje.getFullYear()}-${mesDia}T00:00:00`);
             }
         }
-
         if (dataAlvo) {
-            todasAsFolgas.push({
-                nome: f.nome,
-                area: f.area || 'PRODUÇÃO',
-                data: dataAlvo
-            });
+            todasAsFolgas.push({ nome: f.nome, area: f.area || 'PRODUÇÃO', data: dataAlvo });
         }
     });
 
-    // Processa os agendamentos feitos direto no formulário da tela
     agendamentosManuais.forEach(f => {
-        todasAsFolgas.push({
-            nome: f.nome,
-            area: "Agendado p/ Site",
-            data: new Date(f.data + 'T00:00:00')
-        });
+        todasAsFolgas.push({ nome: f.nome, area: "Agendado p/ Site", data: new Date(f.data + 'T00:00:00') });
     });
 
-    // Distribui nas colunas corretas olhando o calendário atual
     todasAsFolgas.forEach(item => {
         const dataTime = item.data.getTime();
         const dataFormatada = item.data.toLocaleDateString('pt-BR');
-
         const li = document.createElement('li');
-        li.style.padding = '8px 0';
-        li.style.borderBottom = '1px dashed #eee';
         li.innerHTML = `<strong>${item.nome}</strong> (${item.area}) — ${dataFormatada}`;
 
         if (dataTime === hoje.getTime()) {
@@ -220,22 +197,18 @@ function renderizarPainelChefe() {
         } else if (dataTime === amanha.getTime()) {
             ulAmanha.appendChild(li);
         } else if (dataTime > amanha.getTime()) {
-            // Mostra folgas futuras dentro de uma janela de 15 dias para não entupir a tela
             const limiteFuturo = new Date(hoje);
             limiteFuturo.setDate(limiteFuturo.getDate() + 15);
-
             if (dataTime <= limiteFuturo.getTime()) {
                 ulFutura.appendChild(li);
             }
         }
     });
 
-    // Caso alguma seção fique vazia, coloca um aviso sutil
     if (ulHoje.children.length === 0) ulHoje.innerHTML = '<li style="color: #999; font-style: italic">Nenhuma folga para hoje.</li>';
     if (ulAmanha.children.length === 0) ulAmanha.innerHTML = '<li style="color: #999; font-style: italic">Nenhuma folga para amanhã.</li>';
     if (ulFutura.children.length === 0) ulFutura.innerHTML = '<li style="color: #999; font-style: italic">Sem folgas programadas para os próximos dias.</li>';
 }
-
 // 5. Inicialização do sistema ao abrir a página
 window.onload = () => {
     carregarFuncionarios();
