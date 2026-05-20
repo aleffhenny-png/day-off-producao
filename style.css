@@ -1,91 +1,166 @@
+/* --- Reset Básico --- */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 body {
-    background-color: #121212;
-    color: #e0e0e0;
+    background-color: #f4f4f4;
+    color: #333333;
+}
+
+/* --- Cabeçalho Padrão (Navbar) --- */
+.navbar-corporativa {
+    background-color: #000000;
+    color: #ffffff;
+    height: 55px;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
-    min-height: 100vh;
-    padding: 20px;
+    padding: 0 20px;
 }
 
-.main-container {
-    background: #1e1e1e;
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+.logo-texto {
+    font-weight: bold;
+    font-size: 18px;
+    letter-spacing: 1px;
+}
+
+.user-area {
+    font-size: 14px;
+    color: #cccccc;
+}
+
+.linha-vermelha {
+    background-color: #e11b22; /* Vermelho padrão corporativo */
+    height: 4px;
     width: 100%;
-    max-width: 450px;
 }
 
-h1 {
+/* --- Layout Principal --- */
+.main-container {
+    max-width: 1100px;
+    margin: 30px auto;
+    padding: 0 20px;
+}
+
+.titulo-pagina {
+    margin-bottom: 25px;
+    border-bottom: 1px solid #dddddd;
+    padding-bottom: 15px;
+}
+
+.titulo-pagina h1 {
+    font-size: 28px;
+    color: #222222;
     font-weight: 300;
-    text-align: center;
-    color: #bb86fc;
-    margin-bottom: 1rem;
 }
 
-p {
-    text-align: center;
-    font-size: 0.9rem;
-    color: #a0a0a0;
-    margin-bottom: 2rem;
+.titulo-pagina p {
+    font-size: 14px;
+    color: #666666;
+    margin-top: 5px;
 }
 
+/* --- Formulario / Cards --- */
+.card-formulario {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    padding: 20px;
+    margin-bottom: 30px;
+}
+
+.card-formulario h2 {
+    font-size: 18px;
+    margin-bottom: 15px;
+    color: #333333;
+    font-weight: bold;
+}
+
+/* --- Campos de Entrada (Inputs e Selects) --- */
 .input-group-vertical {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 10px;
 }
 
-label {
-    font-size: 0.85rem;
-    color: #bb86fc;
-    margin-bottom: -10px;
+.input-group-vertical label {
+    font-size: 13px;
+    font-weight: bold;
+    color: #555555;
+    margin-bottom: -5px;
 }
 
-input, select {
-    background: #2c2c2c;
-    border: 1px solid #3d3d3d;
-    padding: 12px;
-    border-radius: 10px;
-    color: white;
+.input-group-vertical select, 
+.input-group-vertical input[type="date"] {
+    width: 100%;
+    max-width: 400px;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid #cccccc;
+    background-color: #ffffff;
+    font-size: 14px;
     outline: none;
 }
 
-button {
-    background: #bb86fc;
-    color: #121212;
+.input-group-vertical select:focus, 
+.input-group-vertical input[type="date"]:focus {
+    border-color: #e11b22;
+}
+
+/* --- Botão Quadrado Padrão --- */
+#addBtn {
+    background-color: #e11b22;
+    color: #ffffff;
     border: none;
-    padding: 15px;
-    border-radius: 10px;
-    cursor: pointer;
+    height: 40px;
+    width: 100%;
+    max-width: 400px;
     font-weight: bold;
+    font-size: 14px;
+    cursor: pointer;
+    letter-spacing: 0.5px;
+    transition: background-color 0.2s ease;
     margin-top: 10px;
-    transition: 0.3s;
 }
 
-button:hover {
-    background: #a370f0;
-    transform: translateY(-2px);
+#addBtn:hover {
+    background-color: #b81419;
 }
 
-ul {
-    margin-top: 30px;
+/* --- Estilização do Painel que o JS Cria --- */
+/* (Ajustando os elementos injetados pelo script.js) */
+#listaItens h3 {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 15px;
+    margin-top: 25px;
+    background-color: #eaeaea;
+    border-left: 4px solid #e11b22; /* Detalhe vermelho na lateral do título */
+    color: #333333;
+}
+
+#listaItens ul {
+    background: #ffffff;
+    border: 1px solid #dddddd;
+    border-top: none;
+    padding: 10px 20px;
     list-style: none;
 }
 
-li {
-    background: #2c2c2c;
-    padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    border-left: 4px solid #bb86fc;
-    font-size: 0.9rem;
+#listaItens li {
+    padding: 12px 0;
+    font-size: 14px;
+    border-bottom: 1px solid #eeeeee;
+    color: #444444;
+}
+
+#listaItens li:last-child {
+    border-bottom: none;
+}
+
+#listaItens li strong {
+    color: #000000;
 }
